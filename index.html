@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топырақ және Топырақтың Түзілуі - Интерактивті Портал</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #228B22;
+            --accent-color: #DAA520;
+            --dark-color: #3E2723;
+            --light-color: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            background-attachment: fixed;
+        }
+        
+        header {
+            background: linear-gradient(120deg, var(--dark-color), var(--primary-color));
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.85;
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            width: 100%;
+        }
+        
+        .nav-tabs li {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .nav-tabs a {
+            display: block;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tabs a:hover, .nav-tabs a.active {
+            background-color: rgba(139, 69, 19, 0.08);
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        section {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            background: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .soil-profile {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 2rem 0;
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .soil-layer {
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .soil-layer:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .soil-layer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .soil-layer:hover::after {
+            opacity: 1;
+        }
+        
+        .O-horizon { background: linear-gradient(135deg, #5D4037 0%, #3E2723 100%); }
+        .A-horizon { background: linear-gradient(135deg, #795548 0%, #5D4037 100%); }
+        .E-horizon { background: linear-gradient(135deg, #A1887F 0%, #795548 100%); }
+        .B-horizon { background: linear-gradient(135deg, #8D6E63 0%, #5D4037 100%); }
+        .C-horizon { background: linear-gradient(135deg, #BCAAA4 0%, #8D6E63 100%); }
+        .R-horizon { background: linear-gradient(135deg, #9E9E9E 0%, #616161 100%); }
+        
+        .layer-info {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+        
+        .layer-info.active {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animation-container {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animation-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            font-weight: 700;
+        }
+        
+        .soil-formation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .rock {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #9E9E9E 0%, #616161 100%);
+            border-radius: 50%;
+            position: relative;
+            animation: weathering 8s infinite;
+        }
+        
+        @keyframes weathering {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(0.95) rotate(5deg); }
+        }
+        
+        .particles {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .factors-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .factor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .factor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .factor-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .factor-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .quiz-container, .game-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .question {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .option:hover {
+            background: #e2e8f0;
+            transform: translateX(5px);
+        }
+        
+        .option.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .option.correct {
+            background: #22c55e;
+            color: white;
+            border-color: #22c55e;
+        }
+        
+        .option.incorrect {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+        
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn:hover {
+            background: #6d4c41;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(139, 69, 19, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #1b6e1b;
+        }
+        
+        .btn-accent {
+            background: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background: #b8860b;
+        }
+        
+        .btn-large {
+            padding: 15px 40px;
+            font-size: 1.25rem;
+            margin: 10px;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+            min-height: 300px;
+        }
+        
+        .drag-item {
+            padding: 15px 25px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            margin: 10px;
+            cursor: grab;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .drag-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .drop-zone {
+            width: 300px;
+            height: 100px;
+            border: 3px dashed var(--accent-color);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            background: rgba(218, 165, 32, 0.08);
+            font-weight: 600;
+            color: var(--dark-color);
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .drop-zone.drag-over {
+            background: rgba(139, 69, 19, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-align: center;
+            min-height: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #4ade80;
+        }
+        
+        .feedback.incorrect {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #f87171;
+        }
+        
+        .tabs-content {
+            display: none;
+        }
+        
+        .tabs-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .soil-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .soil-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+        
+        .soil-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .soil-img {
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .soil-content {
+            padding: 1.25rem;
+        }
+        
+        .soil-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .soil-desc {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--accent-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -12px;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: 25px;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -15px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 15px solid white;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -15px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 15px solid white;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+        
+        .facts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .fact-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .fact-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fact-title i {
+            color: var(--accent-color);
+        }
+        
+        footer {
+            background: linear-gradient(120deg, var(--dark-color), #2e1b1b);
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+            display: block;
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tabs li {
+                width: 100%;
+            }
+            
+            .timeline::after {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 40px;
+                padding-right: 20px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 8px !important;
+                right: auto !important;
+            }
+            
+            .timeline-item .timeline-content::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>ТОПЫРАҚ ЖӘНЕ ТОПЫРАҚТЫҢ ТҮЗІЛУІ</h1>
+            <div class="subtitle">Жер бетіндегі өмірдің негізі</div>
+            <p class="tagline">Топырақтың құрылымы, түзілу процестері, түрлері және оның маңыздылығы туралы толық ақпарат, интерактивті ойындар мен тесттермен</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-tabs">
+                <li><a href="#home" class="active" data-tab="home"><i class="fas fa-home"></i> Басты бет</a></li>
+                <li><a href="#profile" data-tab="profile"><i class="fas fa-layer-group"></i> Топырақ профилі</a></li>
+                <li><a href="#formation" data-tab="formation"><i class="fas fa-seedling"></i> Түзілу процесі</a></li>
+                <li><a href="#types" data-tab="types"><i class="fas fa-globe-asia"></i> Топырақ түрлері</a></li>
+                <li><a href="#quiz" data-tab="quiz"><i class="fas fa-question-circle"></i> Тест</a></li>
+                <li><a href="#games" data-tab="games"><i class="fas fa-gamepad"></i> Ойындар</a></li>
+                <li><a href="#facts" data-tab="facts"><i class="fas fa-lightbulb"></i> Қызықты деректер</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <section id="home" class="tabs-content active">
+            <h2 class="section-title"><i class="fas fa-info-circle"></i> Топырақ дегеніміз не?</h2>
+            <p>Топырақ - бұл Жер бетінің өсімдік өсетін, құнарлы қабаты. Ол тірі және өлі органикалық заттардан, минералдардан, су мен ауадан тұратын күрделі табиғи дене. Топырақ - бұл тек өсімдіктердің өсуі үшін ғана емес, сонымен қатар бүкіл экожүйенің қалыпты жұмыс істеуі үшін қажетті негізгі компонент.</p>
+            
+            <div class="animation-container">
+                <div class="animation-title">Топырақтың құрамы</div>
+                <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #795548, #5D4037); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: bold;">45%</div>
+                        <div style="font-weight: 600;">Минералдар</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #4CAF50, #2E7D32); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: bold;">5%</div>
+                        <div style="font-weight: 600;">Органика</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #2196F3, #0D47A1); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: bold;">25%</div>
+                        <div style="font-weight: 600;">Су</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #9E9E9E, #616161); border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: bold;">25%</div>
+                        <div style="font-weight: 600;">Ауа</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-title" style="margin-top: 2rem;"><i class="fas fa-history"></i> Топырақтың тарихы</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">4 миллиард жыл бұрын</div>
+                        <p>Жер планетасының пайда болуы. Бастапқы "топырақ" - вулкандық жыныстар мен метеориттердің қалдықтары.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">3.5 миллиард жыл бұрын</div>
+                        <p>Бірінші микроорганизмдердің пайда болуы. Олар тау жыныстарының ыдырауына ықпал етті.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">450 миллион жыл бұрын</div>
+                        <p>Бірінші өсімдіктердің құрлыққа шығуы. Топырақ түзілу процесі белсенділенді.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">10-15 мың жыл бұрын</div>
+                        <p>Қазіргі заман топырақтарының негізгі профилдерінің қалыптасуы. Антропогендік факторлардың ықпалы басталды.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Бүгінгі күн</div>
+                        <p>Топырақ эрозиясы мен ласталу проблемалары. Тұрақты ауыл шаруашылығы технологияларының дамуы.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="profile" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> Топырақ профилі</h2>
+            <p>Топырақ профилі - бұл топырақтың вертикальды қимасы, ол әртүрлі горизонттардан (қабаттардан) тұрады. Әр горизонттың өзіндік қасиеттері мен қызметі бар.</p>
+            
+            <div class="soil-profile">
+                <div class="soil-layer O-horizon" data-layer="O">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>O горизонты - Өсімдік қалдықтары</span>
+                        <span>0-10 см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="O-info">
+                    <p><strong>O горизонты</strong> - бұл топырақтың ең жоғарғы қабаты. Органикалық заттардан (жапырақтар, сабақтар, өлі жануарлар) тұрады. Бұл қабат микроорганизмдер мен саңырауқұлақтар үшін тамаша орта болып табылады.</p>
+                </div>
+                
+                <div class="soil-layer A-horizon" data-layer="A">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>A горизонты - Топырақтың құнарлы қабаты</span>
+                        <span>10-30 см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="A-info">
+                    <p><strong>A горизонты</strong> - бұл негізгі құнарлы қабат. Минералдар мен органикалық заттардың араласуынан тұрады. Өсімдік тамырлары осы қабатта орналасады. Топырақтың ең қараңғы және құнарлы бөлігі.</p>
+                </div>
+                
+                <div class="soil-layer E-horizon" data-layer="E">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>E горизонты - Шайылу қабаты</span>
+                        <span>30-50 см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="E-info">
+                    <p><strong>E горизонты</strong> - бұл шайылу қабаты. Сумен минералдар мен органикалық заттар төменгі қабаттарға шайылады. Сондықтан бұл қабат жеңіл түсті болады.</p>
+                </div>
+                
+                <div class="soil-layer B-horizon" data-layer="B">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>B горизонты - Шөгінді қабат</span>
+                        <span>50-100 см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="B-info">
+                    <p><strong>B горизонты</strong> - бұл шөгінді қабат. Жоғарғы қабаттардан шайылған минералдар мен органикалық заттар осы жерге жиналады. Қызыл немесе сары түсті болады.</p>
+                </div>
+                
+                <div class="soil-layer C-horizon" data-layer="C">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>C горизонты - Бастапқы тау жынысы</span>
+                        <span>100-200 см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="C-info">
+                    <p><strong>C горизонты</strong> - бұл бастапқы тау жынысы. Топырақ түзілу процесі бұл жерде әлі аяқталмаған. Қатты жыныстар мен қиыршықтардан тұрады.</p>
+                </div>
+                
+                <div class="soil-layer R-horizon" data-layer="R">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>R горизонты - Жарық тау жынысы</span>
+                        <span>200+ см</span>
+                    </div>
+                </div>
+                <div class="layer-info" id="R-info">
+                    <p><strong>R горизонты</strong> - бұл терең жатқан жарық тау жынысы. Топырақ түзілу процесі бұл жерде мүлдем жоқ. Қатты жыныстардан тұрады.</p>
+                </div>
+            </div>
+            
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Қызықты факт</h3>
+                <p>Топырақтың 1 граммында 1 миллиардға дейін микроорганизмдер болуы мүмкін! Бұл адам ағзасындағы бактериялар санынан көбірек.</p>
+            </div>
+        </section>
+        
+        <section id="formation" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-seedling"></i> Топырақтың түзілу процесі</h2>
+            <p>Топырақтың түзілуі - бұл күрделі және ұзақ мерзімді процесс, оған бірнеше факторлар әсер етеді. Топырақтың пайда болуы үшін мыңдаған жылдар қажет.</p>
+            
+            <div class="animation-container">
+                <div class="animation-title">Тау жынысының ыдырауы</div>
+                <div class="soil-formation">
+                    <div class="rock">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold;">Тау жынысы</div>
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-style: italic; color: var(--dark-color);">Тау жынысы уақыт өте келе ыдырап, топыраққа айналады</p>
+            </div>
+            
+            <h3 class="section-title"><i class="fas fa-cogs"></i> Топырақ түзілуіне әсер ететін факторлар</h3>
+            <div class="factors-container">
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="factor-title">Аналық жыныс</div>
+                    <p>Топырақтың негізгі минералдық құрамын анықтайды. Әртүрлі жыныстар әртүрлі топырақ түрлерін береді.</p>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="factor-title">Климат</div>
+                    <p>Температура мен ылғалдылық топырақ түзілу жылдамдығын және бағытын анықтайды.</p>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="factor-title">Өсімдіктер</div>
+                    <p>Өсімдіктер органикалық заттарды қосады және топырақ құрылымын жақсартады.</p>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-microbe"></i>
+                    </div>
+                    <div class="factor-title">Микроорганизмдер</div>
+                    <p>Бактериялар мен саңырауқұлақтар органикалық заттарды ыдыратып, құнарлы заттарды бөледі.</p>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <div class="factor-title">Рельеф</div>
+                    <p>Жер бедері су ағынын, ылғалдылықты және эрозия процестерін анықтайды.</p>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="factor-title">Уақыт</div>
+                    <p>Топырақтың толық қалыптасуы үшін мыңдаған жылдар қажет.</p>
+                </div>
+            </div>
+            
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-top: 20px; border-left: 4px solid var(--secondary-color);">
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;"><i class="fas fa-chart-line"></i> Статистика</h3>
+                <p>Топырақтың 1 см қабатының түзілуі үшін 250-1000 жыл қажет! Ал 20 см құнарлы қабаттың түзілуі үшін 5000-20000 жыл керек.</p>
+            </div>
+        </section>
+        
+        <section id="types" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-globe-asia"></i> Қазақстандағы негізгі топырақ түрлері</h2>
+            <p>Қазақстан аумағында әртүрлі климаттық жағдайларға байланысты көптеген топырақ түрлері кездеседі. Әр топырақ түрінің өзіндік қасиеттері мен ауыл шаруашылығындағы маңыздылығы бар.</p>
+            
+            <div class="soil-types-grid">
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #5D4037, #3E2723);">
+                        <i class="fas fa-tree" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Қара топырақ</h3>
+                        <p class="soil-desc">Қазақстанның солтүстік және орталық аймақтарында кездеседі. Ең құнарлы топырақ түрі. Бидай, арпа өсіруге тамаша жағдай жасайды.</p>
+                    </div>
+                </div>
+                
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #795548, #5D4037);">
+                        <i class="fas fa-seedling" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Сұр топырақ</h3>
+                        <p class="soil-desc">Шөл және шөлейт аймақтарда таралған. Құнарлылығы төмен, бірақ құмайған өсімдіктер үшін қолайлы. Суармалы егіншілікке пайдаланылады.</p>
+                    </div>
+                </div>
+                
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #8D6E63, #5D4037);">
+                        <i class="fas fa-tint" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Сортаң топырақ</h3>
+                        <p class="soil-desc">Тұзды аймақтарда кездеседі. Тұз мөлшері жоғары, өсімдіктердің өсуіне қолайсыз. Мелиорация арқылы қолдануға болады.</p>
+                    </div>
+                </div>
+                
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #A5D6A7, #4CAF50);">
+                        <i class="fas fa-leaf" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Қоңыр топырақ</h3>
+                        <p class="soil-desc">Орманды дала және дала аймақтарында таралған. Орташа құнарлылықта. Жүгері, күнбағыс, картоп өсіруге қолайлы.</p>
+                    </div>
+                </div>
+                
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #BCAAA4, #8D6E63);">
+                        <i class="fas fa-water" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Саз балшық</h3>
+                        <p class="soil-desc">Су өткізгіштігі төмен, ылғалды ұзақ уақыт сақтайды. Кейбір аймақтарда кездеседі. Кейбір дақылдар үшін қолайлы.</p>
+                    </div>
+                </div>
+                
+                <div class="soil-card">
+                    <div class="soil-img" style="background: linear-gradient(135deg, #D7CCC8, #A1887F);">
+                        <i class="fas fa-wind" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="soil-content">
+                        <h3 class="soil-title">Құмды топырақ</h3>
+                        <p class="soil-desc">Шөл аймақтарында басым. Су өткізгіштігі жоғары, бірақ құнарлылығы төмен. Құмайған өсімдіктер үшін қолайлы.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-top: 20px; border-left: 4px solid var(--accent-color);">
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;"><i class="fas fa-globe-asia"></i> Қазақстан статистикасы</h3>
+                <p>Қазақстанда топырақтың 20-ден астам негізгі түрі бар. Ел аумағының 60%-ын шөл және шөлейт топырақтар алып жатыр. Құнарлы қара топырақтар тек 15% аумақты құрайды.</p>
+            </div>
+        </section>
+        
+        <section id="quiz" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-question-circle"></i> Біліміңізді сынап көріңіз</h2>
+            <p>Топырақ және топырақтың түзілуі туралы біліміңізді тексеріңіз. Әр сұраққа жауап беріп, нәтижені көріңіз.</p>
+            
+            <div class="quiz-container">
+                <div id="question-container">
+                    <div class="question">Топырақтың құрамындағы минералдардың үлесі қанша?</div>
+                    <div class="options">
+                        <div class="option" data-correct="false">1. 25%</div>
+                        <div class="option" data-correct="true">2. 45%</div>
+                        <div class="option" data-correct="false">3. 60%</div>
+                        <div class="option" data-correct="false">4. 75%</div>
+                    </div>
+                </div>
+                <button id="next-btn" class="btn btn-large"><i class="fas fa-arrow-right"></i> Келесі сұрақ</button>
+                <div id="result" style="margin-top: 20px; font-weight: bold; font-size: 1.2rem; display: none;"></div>
+            </div>
+        </section>
+        
+        <section id="games" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-gamepad"></i> Интерактивті ойындар</h2>
+            <p>Топырақ түрлері мен олардың қасиеттерін үйренуге арналған ойындар.</p>
+            
+            <div class="game-container">
+                <h3 style="text-align: center; margin-bottom: 20px; color: var(--dark-color);">Топырақ қабаттарын сәйкестендіру</h3>
+                <p style="text-align: center; margin-bottom: 20px;">Төмендегі топырақ қабаттарын дұрыс ретімен орналастырыңыз:</p>
+                
+                <div class="game-area">
+                    <div class="drag-items" id="layers-container">
+                        <div class="drag-item" draggable="true" data-layer="R">R горизонты - Жарық тау жынысы</div>
+                        <div class="drag-item" draggable="true" data-layer="O">O горизонты - Өсімдік қалдықтары</div>
+                        <div class="drag-item" draggable="true" data-layer="B">B горизонты - Шөгінді қабат</div>
+                        <div class="drag-item" draggable="true" data-layer="A">A горизонты - Құнарлы қабат</div>
+                        <div class="drag-item" draggable="true" data-layer="C">C горизонты - Бастапқы тау жынысы</div>
+                        <div class="drag-item" draggable="true" data-layer="E">E горизонты - Шайылу қабаты</div>
+                    </div>
+                    
+                    <div id="drop-area" style="width: 100%; max-width: 500px; margin: 20px auto; background: #f5f5f5; border-radius: 10px; padding: 20px; min-height: 300px;">
+                        <div style="text-align: center; color: #666; padding: 20px;">Топырақ қабаттарын дұрыс ретімен орналастырыңыз (жоғарыдан төмен)</div>
+                    </div>
+                    
+                    <div id="game-feedback" class="feedback"></div>
+                    <button id="check-order" class="btn btn-accent"><i class="fas fa-check"></i> Тексеру</button>
+                    <button id="reset-game" class="btn btn-secondary"><i class="fas fa-redo"></i> Қайта бастау</button>
+                </div>
+            </div>
+        </section>
+        
+        <section id="facts" class="tabs-content">
+            <h2 class="section-title"><i class="fas fa-lightbulb"></i> Қызықты деректер</h2>
+            <p>Топырақ туралы білмейтін қызықты фактілер.</p>
+            
+            <div class="facts-container">
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-microscope"></i> Микроәлем</div>
+                    <p>Топырақтың 1 граммында 10,000 әртүрлі бактерия түрлері болуы мүмкін. Бұл адам ішегіндегі бактериялардан 10 есе көп!</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-tachometer-alt"></i> Жылдамдық</div>
+                    <p>Топырақтың 1 см қабатының түзілуі үшін 500 жыл қажет. Ал 20 см құнарлы қабат үшін - 10,000 жыл!</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-globe-asia"></i> Әлемдік қор</div>
+                    <p>Жер шарындағы топырақ қорының 25% ғана ауыл шаруашылығына пайдалануға болады. Қалғаны - шөлдер, таулар, ормандар.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-shield-alt"></i> Қорғаныш</div>
+                    <p>Топырақ - бұл табиғи сүзгі. Ол суды тазартады, зиянды заттарды сіңіреді және экожүйені қорғайды.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-seedling"></i> Өмір көзі</div>
+                    <p>Топырақта әлемдегі барлық өсімдіктердің 95%-ы өседі. Топырақсыз өсімдіктер жоқ десеңіз де болады.</p>
+                </div>
+                
+                <div class="fact-card">
+                    <div class="fact-title"><i class="fas fa-exclamation-triangle"></i> Қауіп</div>
+                    <p>Әлемде топырақтың 33%-ы деградацияға ұшыраған. Жыл сайын 24 миллиард тонна құнарлы топырақ жоғалып отыр.</p>
+                </div>
+            </div>
+            
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 30px; border-left: 4px solid var(--secondary-color);">
+                <h3 style="color: var(--dark-color); margin-bottom: 10px;"><i class="fas fa-leaf"></i> Топырақты қорғау</h3>
+                <p>Топырақ - бұл қайталанбайтын табиғи ресурс. Оны қорғау үшін:</p>
+                <ul style="padding-left: 20px; margin: 15px 0;">
+                    <li>Эрозияға қарсы шаралар қолдану (террасалау, жасыл белдеулер)</li>
+                    <li>Химиялық өнімдерді азайту, органикалық ауыл шаруашылығын дамыту</li>
+                    <li>Топырақтың құнарлылығын арттыру (сүргілеу, компосттау)</li>
+                    <li>Суару жүйелерін жақсарту, тұздылықты азайту</li>
+                    <li>Тұрақты ауыл шаруашылығы технологияларын енгізу</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">SOIL.KZ</span>
+            <p>Топырақ және топырақтың түзілуі туралы интерактивті білім беру порталы</p>
+            <p style="margin: 15px 0; opacity: 0.9;">Бұл сайт оқу мақсаттарында құрылған. Ақпарат көздері: Қазақстан Республикасы Ғылым академиясы, Әлемдік топырақ ұйымы (FAO), Қазақстан Аграрлық Ғылымдарының Ұлттық Орталығы.</p>
+            <div class="copyright">
+                &copy; 2026 Топырақ Порталы. Барлық құқықтар қорғалған.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab navigation
+        document.querySelectorAll('.nav-tabs a').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.nav-tabs a').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tabs-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Soil profile layer interaction
+        document.querySelectorAll('.soil-layer').forEach(layer => {
+            layer.addEventListener('click', function() {
+                const layerType = this.dataset.layer;
+                
+                // Hide all layer info
+                document.querySelectorAll('.layer-info').forEach(info => {
+                    info.classList.remove('active');
+                });
+                
+                // Show selected layer info
+                document.getElementById(`${layerType}-info`).classList.add('active');
+                
+                // Scroll to info if on mobile
+                if (window.innerWidth < 768) {
+                    document.getElementById(`${layerType}-info`).scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            });
+        });
+        
+        // Quiz functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const options = document.querySelectorAll('.option');
+            const nextBtn = document.getElementById('next-btn');
+            const resultDiv = document.getElementById('result');
+            let currentQuestion = 0;
+            let score = 0;
+            
+            const questions = [
+                {
+                    question: "Топырақтың құрамындағы минералдардың үлесі қанша?",
+                    options: [
+                        {text: "1. 25%", correct: false},
+                        {text: "2. 45%", correct: true},
+                        {text: "3. 60%", correct: false},
+                        {text: "4. 75%", correct: false}
+                    ]
+                },
+                {
+                    question: "Топырақтың қай горизонты ең құнарлы болып табылады?",
+                    options: [
+                        {text: "1. O горизонты", correct: false},
+                        {text: "2. A горизонты", correct: true},
+                        {text: "3. B горизонты", correct: false},
+                        {text: "4. C горизонты", correct: false}
+                    ]
+                },
+                {
+                    question: "Топырақ түзілуіне әсер етпейтін факторды көрсетіңіз:",
+                    options: [
+                        {text: "1. Аналық жыныс", correct: false},
+                        {text: "2. Климат", correct: false},
+                        {text: "3. Өсімдіктер", correct: false},
+                        {text: "4. Ай фазасы", correct: true}
+                    ]
+                },
+                {
+                    question: "Қазақстанда ең көп тараған топырақ түрі қайсы?",
+                    options: [
+                        {text: "1. Қара топырақ", correct: false},
+                        {text: "2. Сұр топырақ", correct: false},
+                        {text: "3. Шөл топырағы", correct: true},
+                        {text: "4. Сортаң топырақ", correct: false}
+                    ]
+                },
+                {
+                    question: "Топырақтың 1 см қабатының түзілуі үшін қанша уақыт қажет?",
+                    options: [
+                        {text: "1. 50-100 жыл", correct: false},
+                        {text: "2. 250-1000 жыл", correct: true},
+                        {text: "3. 1000-5000 жыл", correct: false},
+                        {text: "4. 10000 жылдан астам", correct: false}
+                    ]
+                }
+            ];
+            
+            function loadQuestion() {
+                if (currentQuestion >= questions.length) {
+                    showResult();
+                    return;
+                }
+                
+                const question = questions[currentQuestion];
+                document.querySelector('.question').textContent = question.question;
+                
+                const optionsContainer = document.querySelector('.options');
+                optionsContainer.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option.text;
+                    optionDiv.dataset.correct = option.correct;
+                    optionDiv.addEventListener('click', selectOption);
+                    optionsContainer.appendChild(optionDiv);
+                });
+                
+                resultDiv.style.display = 'none';
+                nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Нәтижені көру' : 'Келесі сұрақ';
+            }
+            
+            function selectOption(e) {
+                const selectedOption = e.target;
+                const isCorrect = selectedOption.dataset.correct === 'true';
+                
+                // Remove selected class from all options
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                selectedOption.classList.add('selected');
+                
+                // Show correct/incorrect feedback
+                document.querySelectorAll('.option').forEach(opt => {
+                    if (opt.dataset.correct === 'true') {
+                        opt.classList.add('correct');
+                    } else if (opt === selectedOption && !isCorrect) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Disable options after selection
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.removeEventListener('click', selectOption);
+                });
+                
+                // Update score if correct
+                if (isCorrect) {
+                    score++;
+                }
+                
+                // Show next button
+                nextBtn.style.display = 'block';
+            }
+            
+            function showResult() {
+                const questionContainer = document.getElementById('question-container');
+                questionContainer.style.display = 'none';
+                nextBtn.style.display = 'none';
+                
+                let resultText = `Сіз ${questions.length} сұрақтың ішінен ${score} сұраққа дұрыс жауап бердіңіз! `;
+                
+                if (score === questions.length) {
+                    resultText += "Тамаша! Сіз топырақ туралы барлығын білесіз!";
+                } else if (score >= questions.length / 2) {
+                    resultText += "Жақсы нәтиже! Бірақ тақырыпты одан әрі оқуға болады.";
+                } else {
+                    resultText += "Нәтиже нашар. Топырақ туралы көбірек оқыңыз.";
+                }
+                
+                resultDiv.textContent = resultText;
+                resultDiv.style.display = 'block';
+                resultDiv.style.backgroundColor = score === questions.length ? '#dcfce7' : (score >= questions.length / 2 ? '#fef3c7' : '#fee2e2');
+                resultDiv.style.color = score === questions.length ? '#166534' : (score >= questions.length / 2 ? '#92400e' : '#b91c1c');
+                resultDiv.style.border = score === questions.length ? '1px solid #4ade80' : (score >= questions.length / 2 ? '1px solid #f59e0b' : '1px solid #f87171');
+            }
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentQuestion < questions.length) {
+                    currentQuestion++;
+                    if (currentQuestion < questions.length) {
+                        loadQuestion();
+                    } else {
+                        showResult();
+                    }
+                }
+            });
+            
+            // Initialize first question
+            loadQuestion();
+            
+            // Reset quiz when switching tabs to quiz
+            document.querySelector('a[data-tab="quiz"]').addEventListener('click', function() {
+                currentQuestion = 0;
+                score = 0;
+                document.getElementById('question-container').style.display = 'block';
+                nextBtn.style.display = 'none';
+                resultDiv.style.display = 'none';
+                loadQuestion();
+            });
+        });
+        
+        // Soil layers game
+        document.addEventListener('DOMContentLoaded', function() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropArea = document.getElementById('drop-area');
+            const checkBtn = document.getElementById('check-order');
+            const resetBtn = document.getElementById('reset-game');
+            const feedback = document.getElementById('game-feedback');
+            const layersContainer = document.getElementById('layers-container');
+            
+            let droppedItems = [];
+            
+            // Correct order: O, A, E, B, C, R
+            const correctOrder = ['O', 'A', 'E', 'B', 'C', 'R'];
+            
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', dragStart);
+            });
+            
+            dropArea.addEventListener('dragover', dragOver);
+            dropArea.addEventListener('dragenter', dragEnter);
+            dropArea.addEventListener('dragleave', dragLeave);
+            dropArea.addEventListener('drop', drop);
+            
+            function dragStart(e) {
+                e.dataTransfer.setData('text/plain', e.target.dataset.layer);
+                setTimeout(() => {
+                    e.target.style.opacity = '0.5';
+                }, 0);
+            }
+            
+            function dragOver(e) {
+                e.preventDefault();
+            }
+            
+            function dragEnter(e) {
+                e.preventDefault();
+                dropArea.style.backgroundColor = '#e8f5e9';
+            }
+            
+            function dragLeave() {
+                dropArea.style.backgroundColor = '#f5f5f5';
+            }
+            
+            function drop(e) {
+                e.preventDefault();
+                dropArea.style.backgroundColor = '#f5f5f5';
+                
+                const layerType = e.dataTransfer.getData('text/plain');
+                const draggedElement = document.querySelector(`.drag-item[data-layer="${layerType}"]`);
+                
+                // Check if this item was already dropped
+                if (droppedItems.includes(layerType)) {
+                    feedback.textContent = "Бұл қабат бұрыннан орналастырылған!";
+                    feedback.className = "feedback incorrect";
+                    return;
+                }
+                
+                // Create visual representation
+                const layerDiv = document.createElement('div');
+                layerDiv.className = 'soil-layer';
+                layerDiv.style.marginBottom = '10px';
+                layerDiv.style.padding = '10px';
+                layerDiv.style.borderRadius = '5px';
+                layerDiv.style.cursor = 'move';
+                layerDiv.style.backgroundColor = getLayerColor(layerType);
+                layerDiv.style.color = 'white';
+                layerDiv.textContent = draggedElement.textContent;
+                layerDiv.dataset.layer = layerType;
+                
+                // Make it draggable within drop area
+                layerDiv.draggable = true;
+                layerDiv.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', layerType);
+                });
+                
+                dropArea.appendChild(layerDiv);
+                droppedItems.push(layerType);
+                
+                // Remove from original container
+                draggedElement.style.display = 'none';
+                
+                feedback.textContent = "Қабат орналастырылды!";
+                feedback.className = "feedback correct";
+            }
+            
+            function getLayerColor(layer) {
+                switch(layer) {
+                    case 'O': return '#5D4037';
+                    case 'A': return '#795548';
+                    case 'E': return '#A1887F';
+                    case 'B': return '#8D6E63';
+                    case 'C': return '#BCAAA4';
+                    case 'R': return '#9E9E9E';
+                    default: return '#795548';
+                }
+            }
+            
+            checkBtn.addEventListener('click', function() {
+                if (droppedItems.length < 6) {
+                    feedback.textContent = "Барлық қабаттарды орналастырыңыз!";
+                    feedback.className = "feedback incorrect";
+                    return;
+                }
+                
+                // Get current order from drop area
+                const currentOrder = Array.from(dropArea.children)
+                    .filter(child => child.classList.contains('soil-layer'))
+                    .map(child => child.dataset.layer);
+                
+                // Check if order is correct
+                let allCorrect = true;
+                for (let i = 0; i < correctOrder.length; i++) {
+                    if (currentOrder[i] !== correctOrder[i]) {
+                        allCorrect = false;
+                        break;
+                    }
+                }
+                
+                if (allCorrect) {
+                    feedback.textContent = "Құттықтаймыз! Сіз топырақ қабаттарын дұрыс ретімен орналастырдыңыз!";
+                    feedback.className = "feedback correct";
+                    feedback.style.fontSize = "1.2rem";
+                    feedback.style.fontWeight = "bold";
+                } else {
+                    feedback.textContent = "Қате! Топырақ қабаттарының дұрыс реті: O → A → E → B → C → R";
+                    feedback.className = "feedback incorrect";
+                }
+            });
+            
+            resetBtn.addEventListener('click', function() {
+                droppedItems = [];
+                dropArea.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">Топырақ қабаттарын дұрыс ретімен орналастырыңыз (жоғарыдан төмен)</div>';
+                document.querySelectorAll('.drag-item').forEach(item => {
+                    item.style.display = 'block';
+                });
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+            });
+        });
+        
+        // Create soil particles animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const soilFormation = document.querySelector('.soil-formation');
+            const rock = document.querySelector('.rock');
+            
+            // Create particles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particles';
+                    particle.style.left = `${Math.random() * 100 + 50}px`;
+                    particle.style.top = `${Math.random() * 100 + 50}px`;
+                    soilFormation.appendChild(particle);
+                    
+                    // Animate particle
+                    setTimeout(() => {
+                        particle.style.opacity = '1';
+                        particle.style.transform = `translate(${(Math.random() - 0.5) * 100}px, ${Math.random() * 50 + 50}px)`;
+                        setTimeout(() => {
+                            particle.style.opacity = '0';
+                        }, 2000);
+                    }, i * 200);
+                }, i * 300);
+            }
+        });
+    </script>
+</body>
+</html>
